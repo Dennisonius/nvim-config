@@ -34,7 +34,7 @@ return require('packer').startup(function()
         require('lualine').setup()
     end, }
     -- Табы вверху
-    use {'akinsho/bufferline.nvim', tag = "v1.*", requires = 'nvim-tree/nvim-web-devicons',
+    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons',
     config = function()
         require("bufferline").setup{}
     end, }
@@ -51,8 +51,37 @@ return require('packer').startup(function()
     use 'preservim/tagbar'
     -- Замена fzf и ack
     use { 'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} },
-    config = function() require'telescope'.setup {} end, }
+    requires = { {'nvim-lua/plenary.nvim'},
+								 {'nvim-telescope/telescope-live-grep-args.nvim'} },
+    config = function()
+			require'telescope'.setup {
+      defaults = {
+        -- Default configuration for telescope goes here:
+        -- config_key = value,
+        -- ..
+      },
+      pickers = {
+        -- Default configuration for builtin pickers goes here:
+        -- picker_name = {
+        --   picker_config_key = value,
+        --   ...
+        -- }
+        -- Now the picker_config_key will be applied every time you call this
+        -- builtin picker
+      },
+      extensions = {
+				live_grep_args = {
+    		auto_quoting = true, -- enable/disable auto-quoting
+				}
+        -- Your extension configuration goes here:
+        -- extension_name = {
+        --   extension_config_key = value,
+        -- }
+        -- please take a look at the readme of the extension you want to configure
+      }
+    	}
+			require'telescope'.load_extension('live_grep_args')
+		end, }
 
 
     -----------------------------------------------------------

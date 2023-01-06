@@ -43,7 +43,7 @@ map('n', '<F3>', ':rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config
 -- <F4> Поиск слова под курсором
 map('n', '<F4>', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], default_opts)
 -- <F5> Поиск слова в модальном окошке
-map('n', '<F5>', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], default_opts)
+map('n', '<F5>', [[<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>]], default_opts)
 -- <F6> разные вариации нумераций строк, можно переключаться
 map('n', '<F6>', ':exec &nu==&rnu? "se nu!" : "se rnu!"<CR>', default_opts)
 -- <F7> дерево файлов.
