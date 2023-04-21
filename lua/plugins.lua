@@ -36,34 +36,34 @@ return require('packer').startup(function()
     -- Табы вверху
     use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons',
     config = function()
-        bufferline.setup.options.groups = {
-            options = {
-                toggle_hidden_on_enter = true -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
-            },
-            items = {
-                {
-                    name = "A", -- Mandatory
-                    --highlight = {underline = true, sp = "blue"}, -- Optional
-                    --priority = 2, -- determines where it will appear relative to other groups (Optional)
-                    --icon = "", -- Optional
-                    matcher = function(buf) -- Mandatory
-                        return buf.filename:match('%.c') or buf.filename:match('%.h')
-                    end,
-                },
-                {
-                    name = "B",
-                    --highlight = {undercurl = true, sp = green},
-                    --auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
-                    matcher = function(buf)
-                        return buf.filename:match('%.md') or buf.filename:match('%.txt')
-                    end,
-                    --separator = { -- Optional
-                        --style = require('bufferline.groups').separator.tab
-                    --},
-                }
-            }
-        }
-        require("bufferline").setup{}
+			bufferline.setup.options.groups = {
+				options = {
+					toggle_hidden_on_enter = true -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
+				},
+				items = {
+					{
+						name = "A", -- Mandatory
+						--highlight = {underline = true, sp = "blue"}, -- Optional
+						--priority = 2, -- determines where it will appear relative to other groups (Optional)
+						--icon = "", -- Optional
+						matcher = function(buf) -- Mandatory
+							return buf.filename:match('%.c') or buf.filename:match('%.h')
+						end,
+					},
+					{
+						name = "B",
+						--highlight = {undercurl = true, sp = green},
+						--auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
+						matcher = function(buf)
+							return buf.filename:match('%.md') or buf.filename:match('%.txt')
+						end,
+						--separator = { -- Optional
+								--style = require('bufferline.groups').separator.tab
+						--},
+					}
+				}
+			}
+			require("bufferline").setup{}
     end, }
 
 
