@@ -28,87 +28,72 @@ return require('packer').startup(function()
     -- Цветовая схема
     use 'joshdick/onedark.vim'
     --- Информационная строка внизу
-    use { 'nvim-lualine/lualine.nvim',
-    requires = {'nvim-tree/nvim-web-devicons', opt = true},
-    config = function()
-        require('lualine').setup()
-    end, }
+    use {
+			'nvim-lualine/lualine.nvim',
+			requires = {'nvim-tree/nvim-web-devicons', opt = true},
+			config = function()
+				require('lualine').setup()
+			end,
+		}
     -- Табы вверху
-    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons',
-    config = function()
-			bufferline.setup.options.groups = {
-				options = {
-					toggle_hidden_on_enter = true -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
-				},
-				items = {
-					{
-						name = "A", -- Mandatory
-						--highlight = {underline = true, sp = "blue"}, -- Optional
-						--priority = 2, -- determines where it will appear relative to other groups (Optional)
-						--icon = "", -- Optional
-						matcher = function(buf) -- Mandatory
-							return buf.filename:match('%.c') or buf.filename:match('%.h')
-						end,
-					},
-					{
-						name = "B",
-						--highlight = {undercurl = true, sp = green},
-						--auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
-						matcher = function(buf)
-							return buf.filename:match('%.md') or buf.filename:match('%.txt')
-						end,
-						--separator = { -- Optional
-								--style = require('bufferline.groups').separator.tab
-						--},
-					}
-				}
-			}
-			require("bufferline").setup{}
-    end, }
+    use {
+			'akinsho/bufferline.nvim',
+			tag = '*',
+			requires = 'nvim-tree/nvim-web-devicons',
+			config = function()
+				require('bufferline').setup{}
+			end,
+		}
 
 
     -----------------------------------------------------------
     -- НАВИГАЦИЯ
     -----------------------------------------------------------
     -- Файловый менеджер
-    use { 'nvim-tree/nvim-tree.lua',
-    requires = 'nvim-tree/nvim-web-devicons',
-    config = function() require'nvim-tree'.setup {} end, }
+    use {
+			'nvim-tree/nvim-tree.lua',
+			requires = 'nvim-tree/nvim-web-devicons',
+			config = function()
+				require('nvim-tree').setup{}
+			end,
+		}
     -- Навигация внутри файла по классам и функциям
     use 'preservim/tagbar'
     -- Замена fzf и ack
-    use { 'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'},
-								 {'nvim-telescope/telescope-live-grep-args.nvim'} },
-    config = function()
-			require'telescope'.setup {
-      defaults = {
-        -- Default configuration for telescope goes here:
-        -- config_key = value,
-        -- ..
-      },
-      pickers = {
-        -- Default configuration for builtin pickers goes here:
-        -- picker_name = {
-        --   picker_config_key = value,
-        --   ...
-        -- }
-        -- Now the picker_config_key will be applied every time you call this
-        -- builtin picker
-      },
-      extensions = {
-				live_grep_args = {
-    		auto_quoting = true, -- enable/disable auto-quoting
+    use {
+			'nvim-telescope/telescope.nvim',
+			requires = { {'nvim-lua/plenary.nvim'},
+									 {'nvim-telescope/telescope-live-grep-args.nvim'} },
+			config = function()
+				require'telescope'.setup {
+					defaults = {
+						-- Default configuration for telescope goes here:
+						-- config_key = value,
+						-- ..
+					},
+					pickers = {
+						-- Default configuration for builtin pickers goes here:
+						-- picker_name = {
+						--   picker_config_key = value,
+						--   ...
+						-- }
+						-- Now the picker_config_key will be applied every time you call this
+						-- builtin picker
+					},
+					extensions = {
+						live_grep_args = {
+						auto_quoting = true, -- enable/disable auto-quoting
+						}
+						-- Your extension configuration goes here:
+						-- extension_name = {
+						--   extension_config_key = value,
+						-- }
+						-- please take a look at the readme of the extension you want to configure
+					}
 				}
-        -- Your extension configuration goes here:
-        -- extension_name = {
-        --   extension_config_key = value,
-        -- }
-        -- please take a look at the readme of the extension you want to configure
-      }
-    	}
-			require'telescope'.load_extension('live_grep_args')
-		end, }
+				require'telescope'.load_extension('live_grep_args')
+			end,
+		}
 
 
     -----------------------------------------------------------

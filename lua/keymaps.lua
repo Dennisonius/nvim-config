@@ -1,6 +1,7 @@
 local map = vim.api.nvim_set_keymap
 local default_opts = {noremap = true, silent = true}
 
+map('n', '<Space>', '<Nop>', default_opts)
 -- Системный буфер обмена shift - Y
 map('v', 'S-Y', '"+y', {})
 -- Типа 'Нажимает' на ESC при быстром нажатии jj, чтобы не тянуться
@@ -17,19 +18,17 @@ map('i', '<C-s>', '<esc>:Autoformat<CR>:w<CR>', default_opts)
 map('n', '<Tab>', ':BufferLineCycleNext<CR>', default_opts)
 map('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', default_opts)
 -- Пролистнуть на страницу вниз / вверх (как в браузерах)
-map('n', '<Space>', '<PageDown>zz', default_opts)
-map('n', '<C-Space>', '<PageUp>zz', default_opts)
-map('v', '<Space>', '<PageDown>zz', default_opts)
-map('v', '<C-Space>', '<PageUp>zz', default_opts)
+map('n', ',', '<PageDown>zz', default_opts)
+map('n', '<A-,>', '<PageUp>zz', default_opts)
+map('v', ',', '<PageDown>zz', default_opts)
+map('v', '<A-,>', '<PageUp>zz', default_opts)
 -- " Переводчик рус -> eng
 map('v', 't', '<Plug>(VTranslate)', {})
 -- fzf
 map('n', '<C-a>', [[ <cmd>lua require('telescope.builtin').find_files()<cr> ]], default_opts)
 map('n', '<C-p>', [[ <cmd>lua require('telescope.builtin').buffers()<cr> ]], default_opts)
--- Возможно пригодятся
--- Переходить не на следующую логическую строку, а на следующую видимую строку (если если строка не помещается на экран и используется авто перенос)
---map('n', 'j', 'gj', {noremap = true})
---map('n', 'k', 'gk', {noremap = true})
+-- Close current window
+map('n', '<leader>c', ':close<CR>',  default_opts)
 
 -----------------------------------------------------------
 -- Фн. клавиши по F1 .. F12

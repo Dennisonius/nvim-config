@@ -8,6 +8,8 @@ g.translate_target = 'en'
 -- Компактный вид у тагбара и Отк. сортировка по имени у тагбара
 g.tagbar_compact = 1
 g.tagbar_sort = 0
+-- <leader> = whitespace
+g.mapleader = ' '
 
 -- Конфиг ale + eslint
 g.ale_fixers = { javascript= { 'eslint' } }
