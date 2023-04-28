@@ -38,6 +38,9 @@ opt.wrap = false               		-- не переносить строку, ес
 -----------------------------------------------------------
 opt.termguicolors = true      --  24-bit RGB colors
 cmd'colorscheme onedark'
+-- Set my colors cause treesitter and onedark do not do that
+cmd [[hi @text.strong.markdown_inline guifg='#ff8800']]
+cmd [[hi @text.emphasis.markdown_inline guifg='#e4a59a']]
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------

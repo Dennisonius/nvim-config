@@ -24,9 +24,13 @@ map('v', ',', '<PageDown>zz', default_opts)
 map('v', '<A-,>', '<PageUp>zz', default_opts)
 -- " Переводчик рус -> eng
 map('v', 't', '<Plug>(VTranslate)', {})
--- fzf
-map('n', '<C-a>', [[ <cmd>lua require('telescope.builtin').find_files()<cr> ]], default_opts)
-map('n', '<C-p>', [[ <cmd>lua require('telescope.builtin').buffers()<cr> ]], default_opts)
+-- my telescope mappings
+map('n', '<leader>fa', [[ <cmd>lua require('telescope.builtin').find_files()<cr> ]], default_opts)
+map('n', '<leader>fp', [[ <cmd>lua require('telescope.builtin').buffers()<cr> ]], default_opts)
+map('n', '<leader>fr', [[ <cmd>lua require('telescope.builtin').registers()<cr> ]], default_opts)
+map('n', '<leader>ff', [[ <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr> ]], default_opts)
+-- search only c-type files
+map('n', '<leader>fl', [[ <cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr> ]], default_opts)
 -- Close current window
 map('n', '<leader>c', ':close<CR>',  default_opts)
 

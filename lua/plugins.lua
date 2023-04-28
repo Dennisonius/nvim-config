@@ -26,7 +26,16 @@ return require('packer').startup(function()
     -----------------------------------------------------------
 
     -- Цветовая схема
-    use 'joshdick/onedark.vim'
+    use {
+			'navarasu/onedark.nvim',
+			config = function()
+				require('onedark').setup{
+					-- Main options --
+					style = 'darker', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+				}
+				require('onedark').load()
+			end,
+		}
     --- Информационная строка внизу
     use {
 			'nvim-lualine/lualine.nvim',
@@ -82,7 +91,7 @@ return require('packer').startup(function()
 					},
 					extensions = {
 						live_grep_args = {
-						auto_quoting = true, -- enable/disable auto-quoting
+						auto_quoting = false, -- enable/disable auto-quoting
 						}
 						-- Your extension configuration goes here:
 						-- extension_name = {
@@ -101,9 +110,28 @@ return require('packer').startup(function()
     -----------------------------------------------------------
 
 
-    --[[ Highlight, edit, and navigate code using a fast incremental parsing library
-    use 'nvim-treesitter/nvim-treesitter'
-    -- Collection of configurations for built-in LSP client
+    -- Highlight, edit, and navigate code using a fast incremental parsing library
+    use {
+			'nvim-treesitter/nvim-treesitter',
+			config = function()
+				require'nvim-treesitter.configs'.setup {
+					-- A list of parser names, or "all"
+					ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+
+					-- Install parsers synchronously (only applied to `ensure_installed`)
+					sync_install = false,
+
+					-- Automatically install missing parsers when entering buffer
+					auto_install = false,
+
+					highlight = {
+						-- `false` will disable the whole extension
+						enable = true,
+					},
+				}
+			end,
+		}
+    --[[ Collection of configurations for built-in LSP client
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     -- Автодополнялка
