@@ -143,14 +143,15 @@ return require('packer').startup(function()
     use 'hrsh7th/cmp-path'
     -- Snippets plugin
     use 'L3MON4D3/LuaSnip'
+		--]]
 
 
 
     -----------------------------------------------------------
     -- PYTHON
     -----------------------------------------------------------
-    --- Шапка с импортами приводим в порядок
-    use 'fisadev/vim-isort'
+    --[[- Шапка с импортами приводим в порядок
+		use 'fisadev/vim-isort'
     -- Поддержка темплейтом jinja2
     use 'mitsuhiko/vim-jinja'
 
@@ -164,10 +165,12 @@ return require('packer').startup(function()
     use 'alvan/vim-closetag'
     -- Подсвечивает #ffffff
     use 'ap/vim-css-color'
+		--]]
 
     -----------------------------------------------------------
     -- РАЗНОЕ
     -----------------------------------------------------------
+		--[[
     -- Даже если включена русская раскладка vim команды будут работать
     use 'powerman/vim-plugin-ruscmd'
     -- 'Автоформатирование' кода для всех языков

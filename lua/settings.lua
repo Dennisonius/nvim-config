@@ -20,6 +20,34 @@ g.ale_fix_on_save = 1
 g.ale_lint_on_text_changed = 'never'
 g.ale_lint_on_insert_leave = 0
 
+cmd([[ let g:clipboard = {
+			\   'name': 'WslClipboard',
+			\   'copy': {
+			\      '+': 'clip.exe',
+			\      '*': 'clip.exe',
+			\    },
+			\   'paste': {
+			\      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			\      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			\   },
+			\   'cache_enabled': 0,
+			\ }
+]])
+
+
+--[[g.clipboard = {
+							 name = 'WslClipboard',
+							 copy = {
+									+ = 'clip.exe',
+									* = 'clip.exe',
+								},
+							 paste = {
+									+ = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+									* = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+							 },
+							 cache_enabled = 0,
+						 }--]]
+
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
