@@ -2,8 +2,6 @@ local map = vim.api.nvim_set_keymap
 local default_opts = {noremap = true, silent = true}
 
 map('n', '<Space>', '<Nop>', default_opts)
--- Системный буфер обмена shift - Y
-map('v', 'S-Y', '"+y', {})
 -- Типа 'Нажимает' на ESC при быстром нажатии jj, чтобы не тянуться
 map('i', 'jj', '<Esc>', {noremap = true})
 -- Стрелочки откл. Использовать hjkl
@@ -15,8 +13,8 @@ map('', '<right>', ':echoe "Use l"<CR>', {noremap = true, silent = false})
 map('n', '<C-s>', ':Autoformat<CR>:w<CR>',  default_opts)
 map('i', '<C-s>', '<esc>:Autoformat<CR>:w<CR>', default_opts)
 -- Переключение вкладок с помощью TAB или shift-tab (akinsho/bufferline.nvim)
-map('n', '<Tab>', ':BufferLineCycleNext<CR>', default_opts)
-map('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', default_opts)
+map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
+map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
 -- Пролистнуть на страницу вниз / вверх (как в браузерах)
 map('n', ',', '<PageDown>zz', default_opts)
 map('n', '<A-,>', '<PageUp>zz', default_opts)
@@ -33,6 +31,12 @@ map('n', '<leader>ff', [[ <cmd>lua require('telescope.builtin').current_buffer_f
 map('n', '<leader>fl', [[ <cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr> ]], default_opts)
 -- Close current window
 map('n', '<leader>c', ':close<CR>',  default_opts)
+-- Системный буфер обмена 
+map('n', '<leader>y', '"+y', {})
+map('n', '<leader>p', '"+p', {})
+-- По включению/выключению
+map('n', '<leader>sl', ':so .ses.vim<CR>', {})
+map('n', '<leader>ss', ':wa<CR>:mks! .ses.vim<CR>:qa<CR>', {})
 
 -----------------------------------------------------------
 -- Фн. клавиши по F1 .. F12

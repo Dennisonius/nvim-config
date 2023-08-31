@@ -34,20 +34,6 @@ cmd([[ let g:clipboard = {
 			\ }
 ]])
 
-
---[[g.clipboard = {
-							 name = 'WslClipboard',
-							 copy = {
-									+ = 'clip.exe',
-									* = 'clip.exe',
-								},
-							 paste = {
-									+ = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-									* = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-							 },
-							 cache_enabled = 0,
-						 }--]]
-
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
@@ -76,7 +62,7 @@ cmd([[
 filetype indent plugin on
 syntax enable
 ]])
--- opt.expandtab = true      -- use spaces instead of tabs
+opt.expandtab = true      -- use spaces instead of tabs
 opt.shiftwidth = 4        -- shift 4 spaces when tab
 opt.tabstop = 4           -- 1 tab == 4 spaces
 opt.smartindent = true    -- autoindent new lines
@@ -159,4 +145,13 @@ cmp.setup {
     },
 },
 }--]]
+
+-----------------------------------------------------------
+-- Установки для Neovide
+-----------------------------------------------------------
+if vim.g.neovide then
+	-- Put anything you want to happen only in Neovide here
+	vim.o.guifont = "DejaVuSansMono NFM:h11"
+	vim.g.neovide_cursor_animation_length = 0
+end
 
