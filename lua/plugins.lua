@@ -131,10 +131,16 @@ return require('packer').startup(function()
 				}
 			end,
 		}
-    --[[ Collection of configurations for built-in LSP client
-    use 'neovim/nvim-lspconfig'
-    use 'williamboman/nvim-lsp-installer'
-    -- Автодополнялка
+    -- Collection of configurations for built-in LSP client
+    use {
+      'neovim/nvim-lspconfig',
+			config = function()
+        require'lspconfig'.clangd.setup{}
+			end,
+    }
+    -- Установщик lsp-серверов, линтеров, форматтеров и т.д.
+    --use 'williamboman/mason.nvim'
+    --[[ Автодополнялка
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
