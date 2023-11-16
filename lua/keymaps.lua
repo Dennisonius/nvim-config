@@ -9,9 +9,6 @@ map('', '<up>', ':echoe "Use k"<CR>', {noremap = true, silent = false})
 map('', '<down>', ':echoe "Use j"<CR>', {noremap = true, silent = false})
 map('', '<left>', ':echoe "Use h"<CR>', {noremap = true, silent = false})
 map('', '<right>', ':echoe "Use l"<CR>', {noremap = true, silent = false})
--- Автоформат + сохранение по CTRL-s , как в нормальном, так и в insert режиме
-map('n', '<C-s>', ':Autoformat<CR>:w<CR>',  default_opts)
-map('i', '<C-s>', '<esc>:Autoformat<CR>:w<CR>', default_opts)
 -- Переключение вкладок с помощью TAB или shift-tab (akinsho/bufferline.nvim)
 map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
 map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
@@ -27,6 +24,7 @@ map('n', '<leader>fa', [[ <cmd>lua require('telescope.builtin').find_files()<cr>
 map('n', '<leader>fp', [[ <cmd>lua require('telescope.builtin').buffers()<cr> ]], default_opts)
 map('n', '<leader>fr', [[ <cmd>lua require('telescope.builtin').registers()<cr> ]], default_opts)
 map('n', '<leader>ff', [[ <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr> ]], default_opts)
+map('n', '<leader>lr', [[ <cmd>lua require('telescope.builtin').lsp_references()<cr> ]], default_opts)
 -- search only c-type files
 map('n', '<leader>fl', [[ <cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr> ]], default_opts)
 -- Close current window
