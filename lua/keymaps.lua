@@ -9,7 +9,7 @@ map('', '<up>', ':echoe "Use k"<CR>', {noremap = true, silent = false})
 map('', '<down>', ':echoe "Use j"<CR>', {noremap = true, silent = false})
 map('', '<left>', ':echoe "Use h"<CR>', {noremap = true, silent = false})
 map('', '<right>', ':echoe "Use l"<CR>', {noremap = true, silent = false})
--- Переключение вкладок с помощью TAB или shift-tab (akinsho/bufferline.nvim)
+-- Переключение вкладок с помощью Backspace или Alt-BS (akinsho/bufferline.nvim)
 map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
 map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
 -- Пролистнуть на страницу вниз / вверх (как в браузерах)
@@ -17,22 +17,27 @@ map('n', ',', '<PageDown>zz', default_opts)
 map('n', '<A-,>', '<PageUp>zz', default_opts)
 map('v', ',', '<PageDown>zz', default_opts)
 map('v', '<A-,>', '<PageUp>zz', default_opts)
--- " Переводчик рус -> eng
+-- Переводчик рус -> eng
 map('v', 't', '<Plug>(VTranslate)', {})
--- my telescope mappings
-map('n', '<leader>fa', [[ <cmd>lua require('telescope.builtin').find_files()<cr> ]], default_opts)
-map('n', '<leader>fp', [[ <cmd>lua require('telescope.builtin').buffers()<cr> ]], default_opts)
-map('n', '<leader>fr', [[ <cmd>lua require('telescope.builtin').registers()<cr> ]], default_opts)
-map('n', '<leader>ff', [[ <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr> ]], default_opts)
-map('n', '<leader>lr', [[ <cmd>lua require('telescope.builtin').lsp_references()<cr> ]], default_opts)
--- search only c-type files
-map('n', '<leader>fl', [[ <cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr> ]], default_opts)
+-- My telescope mappings
+map('n', '<leader>fa', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], default_opts)
+map('n', '<leader>fp', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], default_opts)
+map('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').registers()<cr>]], default_opts)
+map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], default_opts)
+-- Lsp mappings
+map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], default_opts)
+map('n', '<leader>ln', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts)
+map('n', '<leader>lp', [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], default_opts)
+map('n', '<leader>le', [[<cmd>lua vim.lsp.buf.rename()<cr>]], default_opts)
+map('n', '<leader>la', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], default_opts)
+-- Search only c-type files
+map('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr>]], default_opts)
 -- Close current window
 map('n', '<leader>c', ':close<CR>',  default_opts)
 -- Системный буфер обмена 
 map('n', '<leader>y', '"+y', {})
 map('n', '<leader>p', '"+p', {})
--- По включению/выключению
+-- По включению/выключению восстановление/сохранение сессии
 map('n', '<leader>sl', ':so .ses.vim<CR>', {})
 map('n', '<leader>ss', ':wa<CR>:mks! .ses.vim<CR>:qa<CR>', {})
 
