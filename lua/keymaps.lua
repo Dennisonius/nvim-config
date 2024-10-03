@@ -5,10 +5,10 @@ map('n', '<Space>', '<Nop>', default_opts)
 -- Типа 'Нажимает' на ESC при быстром нажатии jj, чтобы не тянуться
 map('i', 'jj', '<Esc>', {noremap = true})
 -- Стрелочки откл. Использовать hjkl
-map('', '<up>', ':echoe "Use k"<CR>', {noremap = true, silent = false})
-map('', '<down>', ':echoe "Use j"<CR>', {noremap = true, silent = false})
-map('', '<left>', ':echoe "Use h"<CR>', {noremap = true, silent = false})
-map('', '<right>', ':echoe "Use l"<CR>', {noremap = true, silent = false})
+map('', '<up>', '6zl6<C-Y>', {noremap = true, silent = false})
+map('', '<down>', '6zh6<C-E>', {noremap = true, silent = false})
+map('', '<left>', '6zh6<C-Y>', {noremap = true, silent = false})
+map('', '<right>', '6zl6<C-E>', {noremap = true, silent = false})
 -- Переключение вкладок с помощью Backspace или Alt-BS (akinsho/bufferline.nvim)
 map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
 map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
@@ -17,6 +17,11 @@ map('n', ',', '<PageDown>zz', default_opts)
 map('n', '<A-,>', '<PageUp>zz', default_opts)
 map('v', ',', '<PageDown>zz', default_opts)
 map('v', '<A-,>', '<PageUp>zz', default_opts)
+-- Пролистнуть на страницу вправо влево
+map('n', 'H', '6zh', default_opts)
+map('n', 'L', '6zl', default_opts)
+map('v', 'H', '6zh', default_opts)
+map('v', 'L', '6zl', default_opts)
 -- Переводчик рус -> eng
 map('v', 't', '<Plug>(VTranslate)', {})
 -- My telescope mappings
