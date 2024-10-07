@@ -52,9 +52,9 @@ map('n', '<leader>ss', ':wa<CR>:mks! .ses.vim<CR>:qa<CR>', {})
 -- По F1 очищаем последний поиск с подсветкой
 map('n', '<F1>', ':nohl<CR>', default_opts)
 -- <F2> перечитать конфигурацию nvim Может не работать, если echo $TERM  xterm-256color
-map('n', '<F2>', ':so ~/.config/nvim/init.lua<CR>:so ~/.config/nvim/lua/plugins.lua<CR>:so ~/.config/nvim/lua/settings.lua<CR>:so ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
+map('n', '<F2>', ':so ~/.config/nvim/init.lua<CR>:so ~/.config/nvim/lua/settings.lua<CR>:so ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
 -- <F3> Открыть всю nvim конфигурацию для редактирования
-map('n', '<F3>', ':rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config/nvim/lua/plugins.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
+map('n', '<F3>', ':rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
 -- <F4> Поиск слова под курсором
 map('n', '<F4>', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], default_opts)
 -- <F5> Поиск слова в модальном окошке

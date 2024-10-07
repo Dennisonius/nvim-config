@@ -1,33 +1,12 @@
------------------------------------------------------------
--- Установка менеджера плагинов
------------------------------------------------------------
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-
-vim.cmd [[packadd packer.nvim]]
-
-return require('packer').startup(function()
-    -- Packer сам себя
-    use 'wbthomason/packer.nvim'
-
+return {
     -----------------------------------------------------------
     -- ПЛАГИНЫ ВНЕШНЕГО ВИДА
     -----------------------------------------------------------
 
     -- Цветовая схема
-    use {
-			'navarasu/onedark.nvim',
+    {
+			"navarasu/onedark.nvim",
+      lazy = false,
 			config = function()
 				require('onedark').setup{
 					-- Main options --
@@ -35,44 +14,52 @@ return require('packer').startup(function()
 				}
 				require('onedark').load()
 			end,
-		}
+		},
+
+		{'nvim-tree/nvim-web-devicons', lazy = true},
+
     --- Информационная строка внизу
-    use {
+    {
 			'nvim-lualine/lualine.nvim',
-			requires = {'nvim-tree/nvim-web-devicons', opt = true},
 			config = function()
 				require('lualine').setup()
 			end,
-		}
+		},
+
+    {'nvim-tree/nvim-web-devicons', lazy = true},
+
     -- Табы вверху
-    use {
+    {
 			'akinsho/bufferline.nvim',
-			tag = '*',
-			requires = 'nvim-tree/nvim-web-devicons',
+			version = '*',
 			config = function()
 				require('bufferline').setup{}
 			end,
-		}
-
+		},
 
     -----------------------------------------------------------
     -- НАВИГАЦИЯ
     -----------------------------------------------------------
     -- Файловый менеджер
-    use {
+    {
 			'nvim-tree/nvim-tree.lua',
-			requires = 'nvim-tree/nvim-web-devicons',
+      lazy = false,
 			config = function()
 				require('nvim-tree').setup{}
 			end,
-		}
+		},
+
     -- Навигация внутри файла по классам и функциям
-    use 'preservim/tagbar'
+    { 'preservim/tagbar', lazy = true },
+
     -- Замена fzf и ack
-    use {
+    {'nvim-lua/plenary.nvim', lazy = true },
+
+    {'nvim-telescope/telescope-live-grep-args.nvim', lazy = true },
+
+    {
 			'nvim-telescope/telescope.nvim',
-			requires = { {'nvim-lua/plenary.nvim'},
-									 {'nvim-telescope/telescope-live-grep-args.nvim'} },
+      lazy = false,
 			config = function()
 				require'telescope'.setup {
 					defaults = {
@@ -91,7 +78,7 @@ return require('packer').startup(function()
 					},
 					extensions = {
 						live_grep_args = {
-						auto_quoting = false, -- enable/disable auto-quoting
+              auto_quoting = false, -- enable/disable auto-quoting
 						}
 						-- Your extension configuration goes here:
 						-- extension_name = {
@@ -102,16 +89,14 @@ return require('packer').startup(function()
 				}
 				require'telescope'.load_extension('live_grep_args')
 			end,
-		}
-
+		},
 
     -----------------------------------------------------------
     -- LSP и автодополнялка
     -----------------------------------------------------------
 
-
     -- Highlight, edit, and navigate code using a fast incremental parsing library
-    use {
+    {
 			'nvim-treesitter/nvim-treesitter',
 			config = function()
 				require'nvim-treesitter.configs'.setup {
@@ -130,14 +115,15 @@ return require('packer').startup(function()
 					},
 				}
 			end,
-		}
+		},
+
     -- Collection of configurations for built-in LSP client
-    use {
+    {
       'neovim/nvim-lspconfig',
 			config = function()
         require'lspconfig'.clangd.setup{}
 			end,
-    }
+    },
     -- Установщик lsp-серверов, линтеров, форматтеров и т.д.
     --use 'williamboman/mason.nvim'
     --[[ Автодополнялка
@@ -177,7 +163,7 @@ return require('packer').startup(function()
     -- РАЗНОЕ
     -----------------------------------------------------------
     -- Бесполезный плагин, чисто анимация
-    use 'eandrju/cellular-automaton.nvim'
+    { 'eandrju/cellular-automaton.nvim', lazy = true },
 		--[[
     -- Даже если включена русская раскладка vim команды будут работать
     use 'powerman/vim-plugin-ruscmd'
@@ -207,12 +193,5 @@ return require('packer').startup(function()
     -- Линтер, работает для всех языков
     use 'dense-analysis/ale'
 --]]
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
-
---[[if packer_bootstrap then
-    return
-end--]]
+}
 

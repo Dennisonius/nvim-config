@@ -1,2 +1,4 @@
 #plugin folder contatins compiled files
 plugin/
+
+lazy-lock.json
