@@ -124,15 +124,20 @@ return {
         require'lspconfig'.clangd.setup{}
 			end,
     },
+
+    -- Автодополнялка
+    { 'hrsh7th/nvim-cmp' },
+    -- Источники для автодополнения в конкретных ситуациях
+    { 'hrsh7th/cmp-nvim-lsp' },
+    --{ 'hrsh7th/cmp-buffer' },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-cmdline' },
+
     -- Установщик lsp-серверов, линтеров, форматтеров и т.д.
     --use 'williamboman/mason.nvim'
-    --[[ Автодополнялка
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
+
+    --[[ Сниппеты?
     use 'saadparwaiz1/cmp_luasnip'
-    --- Автодополнлялка к файловой системе
-    use 'hrsh7th/cmp-path'
     -- Snippets plugin
     use 'L3MON4D3/LuaSnip'
 		--]]
@@ -163,7 +168,7 @@ return {
     -- РАЗНОЕ
     -----------------------------------------------------------
     -- Бесполезный плагин, чисто анимация
-    { 'eandrju/cellular-automaton.nvim', lazy = true },
+    { 'eandrju/cellular-automaton.nvim', lazy = false },
 		--[[
     -- Даже если включена русская раскладка vim команды будут работать
     use 'powerman/vim-plugin-ruscmd'

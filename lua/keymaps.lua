@@ -35,6 +35,8 @@ map('n', '<leader>ln', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts
 map('n', '<leader>lp', [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], default_opts)
 map('n', '<leader>le', [[<cmd>lua vim.lsp.buf.rename()<cr>]], default_opts)
 map('n', '<leader>la', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], default_opts)
+map('n', '<leader>lh', [[<cmd>lua vim.lsp.buf.hover()<cr>]], default_opts)
+--map('i', '<C-F>', [[<cmd>lua vim.lsp.buf.completion()<cr>]], default_opts)
 -- Search only c-type files
 map('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr>]], default_opts)
 -- Close current window
@@ -54,7 +56,7 @@ map('n', '<F1>', ':nohl<CR>', default_opts)
 -- <F2> перечитать конфигурацию nvim Может не работать, если echo $TERM  xterm-256color
 map('n', '<F2>', ':so ~/.config/nvim/init.lua<CR>:so ~/.config/nvim/lua/settings.lua<CR>:so ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
 -- <F3> Открыть всю nvim конфигурацию для редактирования
-map('n', '<F3>', ':rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
+map('n', '<F3>', ':e ~/.config/nvim/lua/config/lazy.lua<CR>:rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/plugins/plugins.lua<CR>:split ~/.config/nvim/lua/keymaps.lua<CR>', { noremap = true })
 -- <F4> Поиск слова под курсором
 map('n', '<F4>', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], default_opts)
 -- <F5> Поиск слова в модальном окошке

@@ -53,9 +53,6 @@ opt.fileencodings = {'ucs-bom', 'utf-8', 'defalut', 'cp1251', 'latin1'} -- до�
 -----------------------------------------------------------
 opt.termguicolors = true      --  24-bit RGB colors
 cmd'colorscheme onedark'
--- Set my colors cause treesitter and onedark do not do that
-cmd [[hi @text.strong.markdown_inline guifg='#ff8800']]
-cmd [[hi @text.emphasis.markdown_inline guifg='#e4a59a']]
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------
@@ -70,7 +67,7 @@ opt.smartindent = true    -- autoindent new lines
 -- don't auto commenting new lines
 cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- remove line lenght marker for selected filetypes
-cmd [[autocmd FileType text,markdown,html,xhtml,javascript setlocal cc=0]]
+cmd [[autocmd FileType text,html,xhtml,javascript setlocal cc=0]]
 -- 2 spaces for selected filetypes
 cmd [[
 autocmd FileType xml,html,xhtml,css,scss,javascript,lua,yaml,htmljinja setlocal shiftwidth=2 tabstop=2
@@ -102,27 +99,62 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 vim.o.completeopt = 'menuone,noselect'
 -- luasnip setup
 local luasnip = require 'luasnip'
+--]]
 -- nvim-cmp setup
 local cmp = require 'cmp'
-cmp.setup {
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'buffer', opts = {
-            get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-            end
-        },
-    },
-},
-}--]]
+cmp.setup({
+  view = {                                                        
+    entries = {name = 'custom', selection_order = 'near_cursor' } 
+  },                                                               
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp', max_item_count = 20 },
+    -- { name = 'vsnip' }, -- For vsnip users.
+    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }, {
+    { name = 'buffer' },
+  })
+})
 
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline', max_item_count = 20 }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+require('lspconfig')['clangd'].setup {
+  capabilities = capabilities
+}
 -----------------------------------------------------------
 -- Установки для Neovide
 -----------------------------------------------------------
