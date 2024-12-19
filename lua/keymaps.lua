@@ -41,6 +41,7 @@ map('n', '<leader>lh', [[<cmd>lua vim.lsp.buf.hover()<cr>]], default_opts)
 map('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr>]], default_opts)
 -- Close current window
 map('n', '<leader>c', ':close<CR>',  default_opts)
+map('n', '<leader>cb', ':BufferLineCycleNext<CR>:bd #<CR>',  default_opts)
 -- Системный буфер обмена 
 map('n', '<leader>y', '"+y', {})
 map('n', '<leader>p', '"+p', {})

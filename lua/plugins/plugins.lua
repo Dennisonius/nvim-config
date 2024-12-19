@@ -26,8 +26,6 @@ return {
 			end,
 		},
 
-    {'nvim-tree/nvim-web-devicons', lazy = true},
-
     -- Табы вверху
     {
 			'akinsho/bufferline.nvim',
@@ -50,7 +48,7 @@ return {
 		},
 
     -- Навигация внутри файла по классам и функциям
-    { 'preservim/tagbar', lazy = true },
+    { 'preservim/tagbar', lazy = false },
 
     -- Замена fzf и ack
     {'nvim-lua/plenary.nvim', lazy = true },
@@ -121,7 +119,40 @@ return {
     {
       'neovim/nvim-lspconfig',
 			config = function()
-        require'lspconfig'.clangd.setup{}
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        require'lspconfig'.clangd.setup{
+          capabilities = capabilities,
+        }
+        require'lspconfig'.pylsp.setup{
+          capabilities = capabilities,
+        }
+        require'lspconfig'.lua_ls.setup{
+          capabilities = capabilities,
+          settings = {
+            Lua = {
+              runtime = {
+                -- Tell the language server which version of Lua you're using
+                -- (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+              },
+              diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {
+                  'vim',
+                  'require'
+                },
+              },
+              workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+              },
+              -- Do not send telemetry data containing a randomized but unique identifier
+              telemetry = {
+                enable = false,
+              },
+            },
+          },
+        }
 			end,
     },
 
@@ -134,7 +165,13 @@ return {
     { 'hrsh7th/cmp-cmdline' },
 
     -- Установщик lsp-серверов, линтеров, форматтеров и т.д.
-    --use 'williamboman/mason.nvim'
+    {
+      'williamboman/mason.nvim',
+      lazy = false,
+			config = function()
+        require('mason').setup()
+			end,
+    },
 
     --[[ Сниппеты?
     use 'saadparwaiz1/cmp_luasnip'

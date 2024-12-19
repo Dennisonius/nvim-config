@@ -1,5 +1,5 @@
 local cmd = vim.cmd             -- execute Vim commands
-local exec = vim.api.nvim_exec  -- execute Vimscript
+local exec = vim.api.nvim_exec2  -- execute Vimscript
 local g = vim.g                 -- global variables
 local opt = vim.opt             -- global/buffer/windows-scoped options
 -- Направление перевода с русского на английский
@@ -85,27 +85,19 @@ augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
 augroup end
-]], false)
+]], {output = false})
 
 -----------------------------------------------------------
 -- Установки для плагинов
 -----------------------------------------------------------
 -- LSP settings
 
-
---[[ nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-vim.o.completeopt = 'menuone,noselect'
--- luasnip setup
-local luasnip = require 'luasnip'
---]]
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup({
-  view = {                                                        
-    entries = {name = 'custom', selection_order = 'near_cursor' } 
-  },                                                               
+  view = {
+    entries = {name = 'custom', selection_order = 'near_cursor' }
+  },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -149,18 +141,12 @@ cmp.setup.cmdline(':', {
   matching = { disallow_symbol_nonprefix_matching = false }
 })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['clangd'].setup {
-  capabilities = capabilities
-}
 -----------------------------------------------------------
 -- Установки для Neovide
 -----------------------------------------------------------
-if vim.g.neovide then
+if g.neovide then
 	-- Put anything you want to happen only in Neovide here
 	vim.o.guifont = "DejaVuSansMono NFM:h11"
-	vim.g.neovide_cursor_animation_length = 0
+	g.neovide_cursor_animation_length = 0
 end
 
