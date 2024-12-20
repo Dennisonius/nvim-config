@@ -206,6 +206,7 @@ return {
     -----------------------------------------------------------
     -- Бесполезный плагин, чисто анимация
     { 'eandrju/cellular-automaton.nvim', lazy = false },
+    { 'github/copilot.vim', lazy = false },
 		--[[
     -- Даже если включена русская раскладка vim команды будут работать
     use 'powerman/vim-plugin-ruscmd'
