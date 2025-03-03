@@ -29,6 +29,9 @@ map('n', '<leader>fa', [[<cmd>lua require('telescope.builtin').find_files()<cr>]
 map('n', '<leader>fp', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], default_opts)
 map('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').registers()<cr>]], default_opts)
 map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], default_opts)
+map('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr>]], default_opts)
+map('n', '<leader>fw', [[<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor({postfix = ' -F -tc'})<cr>]], default_opts)
+map('v', '<leader>fw', [[<cmd>lua require('telescope-live-grep-args.shortcuts').grep_visual_selection({postfix = ' -F -tc'})<cr>]], default_opts)
 -- Lsp mappings
 map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], default_opts)
 map('n', '<leader>ln', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts)
@@ -38,7 +41,6 @@ map('n', '<leader>la', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], default_opts)
 map('n', '<leader>lh', [[<cmd>lua vim.lsp.buf.hover()<cr>]], default_opts)
 --map('i', '<C-F>', [[<cmd>lua vim.lsp.buf.completion()<cr>]], default_opts)
 -- Search only c-type files
-map('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').live_grep{type_filter = 'c'}<cr>]], default_opts)
 -- Close current window
 map('n', '<leader>c', ':close<CR>',  default_opts)
 map('n', '<leader>cb', ':BufferLineCycleNext<CR>:bd #<CR>',  default_opts)
