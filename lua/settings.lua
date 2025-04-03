@@ -1,5 +1,5 @@
 local cmd = vim.cmd             -- execute Vim commands
-local exec = vim.api.nvim_exec2  -- execute Vimscript
+local exec = vim.api.nvim_exec2 -- execute Vimscript
 local g = vim.g                 -- global variables
 local opt = vim.opt             -- global/buffer/windows-scoped options
 -- Направление перевода с русского на английский
@@ -12,7 +12,7 @@ g.tagbar_sort = 0
 g.mapleader = ' '
 
 -- Конфиг ale + eslint
-g.ale_fixers = { javascript= { 'eslint' } }
+g.ale_fixers = { javascript = { 'eslint' } }
 g.ale_sign_error = '❌'
 g.ale_sign_warning = '⚠️'
 g.ale_fix_on_save = 1
@@ -37,22 +37,22 @@ cmd([[ let g:clipboard = {
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
-opt.colorcolumn = '80'              -- Разделитель на 80 символов
-opt.cursorline = true               -- Подсветка строки с курсором
-opt.spelllang = { 'en_us', 'ru' }    -- Словари рус eng
-opt.number = true                   -- Включаем нумерацию строк
-opt.relativenumber = true           -- Вкл. относительную нумерацию строк
-opt.so=999                          -- Курсор всегда в центре экрана
-opt.undofile = true                 -- Возможность отката назад
-opt.splitright = true               -- vertical split вправо
-opt.splitbelow = true               -- horizontal split вниз
-opt.wrap = false               		-- не переносить строку, если не помещается на весь экран
-opt.fileencodings = {'ucs-bom', 'utf-8', 'defalut', 'cp1251', 'latin1'} -- добавит cp1251
+opt.colorcolumn = '80'                                                  -- Разделитель на 80 символов
+opt.cursorline = true                                                   -- Подсветка строки с курсором
+opt.spelllang = { 'en_us', 'ru' }                                       -- Словари рус eng
+opt.number = true                                                       -- Включаем нумерацию строк
+opt.relativenumber = true                                               -- Вкл. относительную нумерацию строк
+opt.so = 999                                                            -- Курсор всегда в центре экрана
+opt.undofile = true                                                     -- Возможность отката назад
+opt.splitright = true                                                   -- vertical split вправо
+opt.splitbelow = true                                                   -- horizontal split вниз
+opt.wrap = false                                                        -- не переносить строку, если не помещается на весь экран
+opt.fileencodings = { 'ucs-bom', 'utf-8', 'defalut', 'cp1251', 'latin1' } -- добавит cp1251
 -----------------------------------------------------------
 -- Цветовая схема
 -----------------------------------------------------------
-opt.termguicolors = true      --  24-bit RGB colors
-cmd'colorscheme onedark'
+opt.termguicolors = true --  24-bit RGB colors
+cmd 'colorscheme onedark'
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------
@@ -60,10 +60,10 @@ cmd([[
 filetype indent plugin on
 syntax enable
 ]])
-opt.expandtab = true      -- use spaces instead of tabs
-opt.shiftwidth = 4        -- shift 4 spaces when tab
-opt.tabstop = 4           -- 1 tab == 4 spaces
-opt.smartindent = true    -- autoindent new lines
+opt.expandtab = true   -- use spaces instead of tabs
+opt.shiftwidth = 4     -- shift 4 spaces when tab
+opt.tabstop = 4        -- 1 tab == 4 spaces
+opt.smartindent = true -- autoindent new lines
 -- don't auto commenting new lines
 cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- remove line lenght marker for selected filetypes
@@ -85,7 +85,7 @@ augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
 augroup end
-]], {output = false})
+]], { output = false })
 
 -----------------------------------------------------------
 -- Установки для плагинов
@@ -96,7 +96,7 @@ augroup end
 local cmp = require 'cmp'
 cmp.setup({
   view = {
-    entries = {name = 'custom', selection_order = 'near_cursor' }
+    entries = { name = 'custom', selection_order = 'near_cursor' }
   },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
@@ -145,8 +145,7 @@ cmp.setup.cmdline(':', {
 -- Установки для Neovide
 -----------------------------------------------------------
 if g.neovide then
-	-- Put anything you want to happen only in Neovide here
-	vim.o.guifont = "DejaVuSansMono NFM:h11"
-	g.neovide_cursor_animation_length = 0
+  -- Put anything you want to happen only in Neovide here
+  vim.o.guifont = "DejaVuSansMono NFM:h11"
+  g.neovide_cursor_animation_length = 0
 end
-
