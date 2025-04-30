@@ -10,8 +10,8 @@ map('', '<down>', '6zh6<C-E>', { noremap = true, silent = false })
 map('', '<left>', '6zh6<C-Y>', { noremap = true, silent = false })
 map('', '<right>', '6zl6<C-E>', { noremap = true, silent = false })
 -- Переключение вкладок с помощью Backspace или Alt-BS (akinsho/bufferline.nvim)
-map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
-map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
+map('n', '<BS>', ':bn<CR>', default_opts)
+map('n', '<A-BS>', ':bp<CR>', default_opts)
 -- Пролистнуть на страницу вниз / вверх (как в браузерах)
 map('n', ',', '<PageDown>zz', default_opts)
 map('n', '<A-,>', '<PageUp>zz', default_opts)
@@ -38,6 +38,7 @@ map('v', '<leader>fw',
   default_opts)
 -- Lsp mappings
 map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], default_opts)
+map('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]], default_opts)
 map('n', '<leader>ln', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts)
 map('n', '<leader>lp', [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], default_opts)
 map('n', '<leader>le', [[<cmd>lua vim.lsp.buf.rename()<cr>]], default_opts)
@@ -46,14 +47,20 @@ map('n', '<leader>lh', [[<cmd>lua vim.lsp.buf.hover()<cr>]], default_opts)
 --map('i', '<C-F>', [[<cmd>lua vim.lsp.buf.completion()<cr>]], default_opts)
 -- Search only c-type files
 -- Close current window
-map('n', '<leader>c', ':close<CR>', default_opts)
-map('n', '<leader>cb', ':BufferLineCycleNext<CR>:bd #<CR>', default_opts)
+map('n', '<leader>cw', ':close<CR>', default_opts)
+map('n', '<leader>cc', ':bd<CR>', default_opts)
+map('n', '<leader>cl', ':bn<CR>:bd #<CR>', default_opts)
+map('n', '<leader>ch', ':bp<CR>:bd #<CR>', default_opts)
+map('n', '<leader>ct', ':bd!<CR>', default_opts)
 -- Системный буфер обмена
 map('n', '<leader>y', '"+y', {})
 map('n', '<leader>p', '"+p', {})
 -- По включению/выключению восстановление/сохранение сессии
 map('n', '<leader>sl', ':so .ses.vim<CR>', {})
 map('n', '<leader>ss', ':wa<CR>:mks! .ses.vim<CR>:qa<CR>', {})
+-- Открыть/закрыть терминал
+map('n', '<leader>otl', ':vs || terminal<CR>', {})
+map('n', '<leader>ott', ':terminal<CR>', {})
 
 -----------------------------------------------------------
 -- Фн. клавиши по F1 .. F12
@@ -66,7 +73,7 @@ map('n', '<F2>',
   { noremap = true })
 -- <F3> Открыть всю nvim конфигурацию для редактирования
 map('n', '<F3>',
-  ':e ~/.config/nvim/lua/config/lazy.lua<CR>:rightbelow vsplit ~/.config/nvim/init.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/plugins/plugins.lua<CR>:split ~/.config/nvim/lua/keymaps.lua<CR>',
+  ':e ~/.config/nvim/lua/keymaps.lua<CR>:rightbelow vsplit ~/.config/nvim/config/lazy.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/plugins/plugins.lua<CR>:split ~/.config/nvim/init.lua<CR>',
   { noremap = true })
 -- <F4> Поиск слова под курсором
 map('n', '<F4>', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], default_opts)
