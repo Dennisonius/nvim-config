@@ -263,7 +263,33 @@ return {
     -- Подсвечивает #ffffff
     use 'ap/vim-css-color'
 		--]]
+    -----------------------------------------------------------
+    -- HTML и CSS
+    -----------------------------------------------------------
 
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+    },
+    config = function()
+      require("nvim-dap-virtual-text").setup {
+        enabled = true,
+        enable_commands = false,
+        commented = false,
+      }
+      require("dap").adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
+    end,
+  },
   -----------------------------------------------------------
   -- РАЗНОЕ
   -----------------------------------------------------------
@@ -275,8 +301,6 @@ return {
     use 'powerman/vim-plugin-ruscmd'
     -- 'Автоформатирование' кода для всех языков
     use 'Chiel92/vim-autoformat'
-    -- ]p - вставить на строку выше, [p - ниже
-    use 'tpope/vim-unimpaired'
     -- Переводчик рус - англ
     use 'skanehira/translate.vim'
     --- popup окошки
@@ -289,9 +313,6 @@ return {
     use 'tpope/vim-repeat'
     -- Стартовая страница, если просто набрать vim в консоле
     use 'mhinz/vim-startify'
-    -- Комментирует по gc все, вне зависимости от языка программирования
-    use { 'numToStr/Comment.nvim',
-    config = function() require('Comment').setup() end }
     -- Обрамляет строку в теги по ctrl- y + ,
     use 'mattn/emmet-vim'
     -- Закрывает автоматом скобки

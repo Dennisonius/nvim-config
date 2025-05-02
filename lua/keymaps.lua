@@ -61,6 +61,14 @@ map('n', '<leader>ss', ':wa<CR>:mks! .ses.vim<CR>:qa<CR>', {})
 -- Открыть/закрыть терминал
 map('n', '<leader>otl', ':vs || terminal<CR>', {})
 map('n', '<leader>ott', ':terminal<CR>', {})
+-- Debugging
+map('n', '<leader>dt', [[<cmd>lua require('dap').terminate()<cr>]], default_opts)
+map('n', '<leader>dc', [[<cmd>lua require('dap').continue()<cr>]], default_opts)
+map('n', '<leader>dbb', [[<cmd>lua require('dap').toggle_breakpoint()<cr>]], default_opts)
+map('n', '<leader>db', [[<cmd>lua require('dap').toggle_breakpoint()<cr>]], default_opts)
+map('n', '<leader>di', [[<cmd>lua require('dap').step_into()<cr>]], default_opts)
+map('n', '<leader>dv', [[<cmd>lua require('dap').step_over()<cr>]], default_opts)
+map('n', '<leader>do', [[<cmd>lua require('dap').step_out()<cr>]], default_opts)
 
 -----------------------------------------------------------
 -- Фн. клавиши по F1 .. F12
@@ -73,7 +81,7 @@ map('n', '<F2>',
   { noremap = true })
 -- <F3> Открыть всю nvim конфигурацию для редактирования
 map('n', '<F3>',
-  ':e ~/.config/nvim/lua/keymaps.lua<CR>:rightbelow vsplit ~/.config/nvim/config/lazy.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/plugins/plugins.lua<CR>:split ~/.config/nvim/init.lua<CR>',
+  ':e ~/.config/nvim/lua/keymaps.lua<CR>:rightbelow vsplit ~/.config/nvim/lua/config/lazy.lua<CR>:split ~/.config/nvim/lua/settings.lua<CR>:split ~/.config/nvim/lua/plugins/plugins.lua<CR>:split ~/.config/nvim/init.lua<CR>',
   { noremap = true })
 -- <F4> Поиск слова под курсором
 map('n', '<F4>', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], default_opts)
