@@ -83,7 +83,29 @@ return {
     'nvim-tree/nvim-tree.lua',
     lazy = false,
     config = function()
-      require('nvim-tree').setup {}
+      require('nvim-tree').setup {
+        filters = {
+          git_ignored = false,
+        },
+        -- on_attach = my_on_attach,
+
+        on_attach = function(bufnr)
+          local api = require "nvim-tree.api"
+
+          local function opts(desc)
+            return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
+
+          -- default mappings
+          api.config.mappings.default_on_attach(bufnr)
+
+          -- custom mappings
+          vim.keymap.set("n", "<leader>wl", function() api.tree.resize({relative = 20})end, opts("20 Wider"))
+          vim.keymap.set("n", "<leader>wh", function() api.tree.resize({relative = -20})end, opts("20 Narrower"))
+
+        end,
+
+      }
     end,
   },
 
@@ -295,7 +317,136 @@ return {
   -----------------------------------------------------------
   -- Бесполезный плагин, чисто анимация
   { 'eandrju/cellular-automaton.nvim', lazy = false },
-  { 'github/copilot.vim',              lazy = false },
+  -- { 'github/copilot.vim',              lazy = false },
+  -- add lua copilot plugin
+  {
+    'zbirenbaum/copilot.lua',
+    lazy = false,
+    config = function()
+      require('copilot').setup {
+        panel = {
+          enabled = true,
+          auto_refresh = true,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>"
+          },
+          layout = {
+            position = "bottom", -- | top | left | right
+            ratio = 0.4
+          }
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-l><C-l>",
+            accept_word = "<C-l><C-w>",
+            accept_line = false,
+            next = "<C-l><C-j>",
+            prev = "<C-l><C-k>",
+            dismiss = "<C-l><C-s>",
+          },
+        },
+        filetypes = {
+          ["*"] = true,
+          --["python"] = false,
+        },
+        copilot_node_command = 'node', -- Node.js version must be > 16.x
+        server_opts_overrides = {},
+      }
+    end,
+  },
+  -- add avante.nvim
+  {
+    "yetone/avante.nvim",
+    build = vim.fn.has("win32") ~= 0
+        and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+        or "make",
+    event = "VeryLazy",
+    mode = "legacy", -- Switch from "agentic" to "legacy"
+    version = false, -- Never set this value to "*"! Never!
+    ---@module 'avante'
+    ---@type avante.Config
+    opts = {
+      -- add any opts here
+      -- this file can contain specific instructions for your project
+      instructions_file = "avante.md",
+      -- for example
+      provider = "claude",
+      providers = {
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-sonnet-4-20250514",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 20480,
+          },
+        },
+        moonshot = {
+          endpoint = "https://api.moonshot.ai/v1",
+          model = "kimi-k2-0711-preview",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 32768,
+          },
+        },
+        copilot = {
+          -- No extra config needed
+        },
+        deepseek = {
+          __inherited_from = "openai",
+          api_key_name = os.getenv('DEEPSEEK_API_KEY'),
+          endpoint = "https://api.deepseek.com",
+          model = "deepseek-coder",
+        },
+      },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "echasnovski/mini.pick",       -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua",            -- for file_selector provider fzf
+      "stevearc/dressing.nvim",      -- for input provider dressing
+      "folke/snacks.nvim",           -- for input provider snacks
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",      -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  }
   --[[
     -- Даже если включена русская раскладка vim команды будут работать
     use 'powerman/vim-plugin-ruscmd'
