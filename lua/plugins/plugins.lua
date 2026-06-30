@@ -71,7 +71,18 @@ return {
     'akinsho/bufferline.nvim',
     version = '*',
     config = function()
-      require('bufferline').setup {}
+      require('bufferline').setup {
+        options = {
+          mode = "buffers", -- set to "tabs" to only show tabpages instead
+          sort_by = 'directory'-- | 'tabs'
+          -- sort_by = 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
+          --     -- add custom logic
+          --     local modified_a = vim.fn.getftime(buffer_a.path)
+          --     local modified_b = vim.fn.getftime(buffer_b.path)
+          --     return modified_a > modified_b
+          -- end,
+        }
+      }
     end,
   },
 

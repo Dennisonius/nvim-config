@@ -4,14 +4,16 @@ local default_opts = { noremap = true, silent = true }
 map('n', '<Space>', '<Nop>', default_opts)
 -- Типа 'Нажимает' на ESC при быстром нажатии jj, чтобы не тянуться
 map('i', 'jj', '<Esc>', { noremap = true })
--- Стрелочки откл. Использовать hjkl
+-- Стрелочки - прокрутка по "диагонали"
 map('', '<up>', '6zl6<C-Y>', { noremap = true, silent = false })
 map('', '<down>', '6zh6<C-E>', { noremap = true, silent = false })
 map('', '<left>', '6zh6<C-Y>', { noremap = true, silent = false })
 map('', '<right>', '6zl6<C-E>', { noremap = true, silent = false })
+-- Метки на файл на последнее место, где был курсор
+map('n', "<leader>'", [[:execute 'buffer' getpos("'" . toupper(nr2char(getchar())))[0]<cr>]], default_opts)
 -- Переключение вкладок с помощью Backspace или Alt-BS (akinsho/bufferline.nvim)
-map('n', '<BS>', ':bn<CR>', default_opts)
-map('n', '<A-BS>', ':bp<CR>', default_opts)
+map('n', '<BS>', ':BufferLineCycleNext<CR>', default_opts)
+map('n', '<A-BS>', ':BufferLineCyclePrev<CR>', default_opts)
 -- Пролистнуть на страницу вниз / вверх (как в браузерах)
 map('n', ',', '<PageDown>zz', default_opts)
 map('n', '<A-,>', '<PageUp>zz', default_opts)
@@ -49,8 +51,8 @@ map('n', '<leader>lh', [[<cmd>lua vim.lsp.buf.hover()<cr>]], default_opts)
 -- Close current window
 map('n', '<leader>cw', ':close<CR>', default_opts)
 map('n', '<leader>cc', ':bd<CR>', default_opts)
-map('n', '<leader>cl', ':bn<CR>:bd #<CR>', default_opts)
-map('n', '<leader>ch', ':bp<CR>:bd #<CR>', default_opts)
+map('n', '<leader>cl', ':BufferLineCycleNext<CR>:bd #<CR>', default_opts)
+map('n', '<leader>ch', ':BufferLineCyclePrev<CR>:bd #<CR>', default_opts)
 map('n', '<leader>ct', ':bd!<CR>', default_opts)
 -- Системный буфер обмена
 map('n', '<leader>y', '"+y', {})
