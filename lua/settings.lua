@@ -182,6 +182,14 @@ dap.listeners.before.event_exited.dapui_config = function()
   ui.close()
 end
 
+-- Always start treesitter when opening a file
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 -----------------------------------------------------------
 -- Установки для Neovide
 -----------------------------------------------------------

@@ -169,86 +169,88 @@ return {
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   {
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate',
     config = function()
-      require 'nvim-treesitter.configs'.setup {
-        -- A list of parser names, or "all"
-        ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
-
-        -- Install parsers synchronously (only applied to `ensure_installed`)
-        sync_install = false,
-
-        -- Automatically install missing parsers when entering buffer
-        auto_install = false,
-
-        highlight = {
-          -- `false` will disable the whole extension
-          enable = true,
-        },
-        modules = {},
-        ignore_install = { "javascript" },
-      }
+      require'nvim-treesitter'.install { "bash", "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" }
     end,
   },
 
   -- Collection of configurations for built-in LSP client
   {
     'neovim/nvim-lspconfig',
-    config = function()
+    opts = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      require 'lspconfig'.clangd.setup {
-        capabilities = capabilities,
-      }
-      require 'lspconfig'.pylsp.setup {
-        capabilities = capabilities,
-      }
-      require 'lspconfig'.lua_ls.setup {
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            runtime = {
-              -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
-              version = 'LuaJIT',
-            },
-            diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {
-                'vim',
-                'require'
+      local ret = {
+        servers = {
+          -- configuration for all lsp servers
+          clangd = {
+            capabilities = capabilities,
+          },
+          pylsp = {
+            capabilities = capabilities,
+          },
+          lua_ls = {
+            capabilities = capabilities,
+            settings = {
+              Lua = {
+                runtime = {
+                  -- Tell the language server which version of Lua you're using
+                  -- (most likely LuaJIT in the case of Neovim)
+                  version = 'LuaJIT',
+                },
+                diagnostics = {
+                  -- Get the language server to recognize the `vim` global
+                  globals = {
+                    'vim',
+                    'require'
+                  },
+                },
+                workspace = {
+                  -- Make the server aware of Neovim runtime files
+                  library = vim.api.nvim_get_runtime_file("", true),
+                },
+                -- Do not send telemetry data containing a randomized but unique identifier
+                telemetry = {
+                  enable = false,
+                },
               },
             },
-            workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-              enable = false,
+          },
+          neocmake = {
+            capabilities = capabilities,
+            default_config = {
+              cmd = { "neocmakelsp", "--stdio" },
+              filetypes = { "cmake" },
+              root_dir = function(fname)
+                return vim.fs.dirname(vim.fs.find('.svn', { path = fname, upward = true })[1])
+              end,
+              single_file_support = true, -- suggested
+              -- on_attach = on_attach,      -- on_attach is the on_attach function you defined
+              init_options = {
+                format = {
+                  enable = true
+                },
+                lint = {
+                  enable = true
+                },
+                scan_cmake_in_package = true -- default is true
+              },
             },
           },
         },
       }
-      require 'lspconfig'.neocmake.setup {
-        capabilities = capabilities,
-        default_config = {
-          cmd = { "neocmakelsp", "--stdio" },
-          filetypes = { "cmake" },
-          root_dir = function(fname)
-            return vim.fs.dirname(vim.fs.find('.svn', { path = fname, upward = true })[1])
-          end,
-          single_file_support = true, -- suggested
-          -- on_attach = on_attach,      -- on_attach is the on_attach function you defined
-          init_options = {
-            format = {
-              enable = true
-            },
-            lint = {
-              enable = true
-            },
-            scan_cmake_in_package = true -- default is true
-          }
-        }
-      }
+      return ret
+    end,
+    config = function(_, opts)
+      for server, server_opts in pairs(opts.servers) do
+        -- Pass the custom settings to Neovim
+        if not vim.tbl_isempty(server_opts) then
+          vim.lsp.config(server, server_opts)
+        end
+        -- Start the server
+        vim.lsp.enable(server)
+      end
     end,
   },
 
@@ -375,9 +377,10 @@ return {
   -- add avante.nvim
   {
     "yetone/avante.nvim",
-    build = vim.fn.has("win32") ~= 0
+    --[[ build = vim.fn.has("win32") ~= 0
         and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
         or "make",
+        --]]
     event = "VeryLazy",
     mode = "legacy", -- Switch from "agentic" to "legacy"
     version = false, -- Never set this value to "*"! Never!
@@ -422,15 +425,16 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+      { "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
       --- The below dependencies are optional,
-      "echasnovski/mini.pick",       -- for file_selector provider mini.pick
+      "nvim-mini/mini.pick", -- for file_selector provider mini.pick
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua",            -- for file_selector provider fzf
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "stevearc/dressing.nvim",      -- for input provider dressing
-      "folke/snacks.nvim",           -- for input provider snacks
+      "folke/snacks.nvim", -- for input provider snacks
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",      -- for providers='copilot'
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
